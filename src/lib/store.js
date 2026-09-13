@@ -9,7 +9,11 @@ import {
 import { doc, getDoc, setDoc } from "firebase/firestore";
 
 function emptyChild(name) {
-  return { name, unlockedTo: 1, stars: {}, totalScore: 0, bestStreak: 0, stats: {}, history: [] };
+  return {
+    name, unlockedTo: 1, stars: {}, totalScore: 0, bestStreak: 0, stats: {}, history: [],
+    examAttempts: [], mysteryAttempts: [],
+    contextDaily: { date: "", count: 0 }, contextTokens: 0, contextStats: { byCategory: {}, right: 0, wrong: 0 },
+  };
 }
 export function emptyFamily(email) {
   return {

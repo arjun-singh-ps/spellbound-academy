@@ -11,7 +11,18 @@ export function shuffle(arr) {
 // more, and hasn't yet "mastered" (tracked via stats[key].box, 0-5,
 // a lightweight spaced-repetition signal).
 export function pickWeighted(pool, stats, tierMax, keyOf) {
-  const eligible = pool.filter((e) => e.t <= tierMax);
+  return pickWeightedByFilter(pool, stats, (e) => e.t <= tierMax, keyOf);
+}
+
+// Same weighting logic, but for callers (Mystery Challenge) that need an
+// exact tier rather than "at most this tier" — e.g. "exactly 3 Easy, 4
+// Tricky, 1 Fiendish" instead of a single difficulty ceiling.
+export function pickWeightedExactTier(pool, stats, tier, keyOf) {
+  return pickWeightedByFilter(pool, stats, (e) => e.t === tier, keyOf);
+}
+
+function pickWeightedByFilter(pool, stats, filterFn, keyOf) {
+  const eligible = pool.filter(filterFn);
   const src = eligible.length ? eligible : pool;
   const weighted = [];
   src.forEach((entry) => {

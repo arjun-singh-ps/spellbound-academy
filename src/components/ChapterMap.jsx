@@ -21,6 +21,33 @@ export default function ChapterMap() {
         </div>
       </div>
 
+      <button className="exam-entry-card" onClick={() => setSub("exam")}>
+        <div className="exam-entry-icon">📝</div>
+        <div style={{ flex: 1, textAlign: "left" }}>
+          <div className="exam-entry-title">Mock Exam Hall</div>
+          <div className="exam-entry-sub">Sit a full timed practice exam — real exam-hall conditions, no sparks or speed bonuses.</div>
+        </div>
+        <div className="exam-entry-arrow">→</div>
+      </button>
+
+      <button className="exam-entry-card" style={{ borderColor: "var(--gold-400)", background: "linear-gradient(135deg, #d4af6122, var(--wood-800))" }} onClick={() => setSub("mystery")}>
+        <div className="exam-entry-icon">🔮</div>
+        <div style={{ flex: 1, textAlign: "left" }}>
+          <div className="exam-entry-title" style={{ color: "var(--gold-300)" }}>Mystery Challenge</div>
+          <div className="exam-entry-sub">Answer 8 questions to reveal a secret word letter by letter, then crack the anagram for a bonus.</div>
+        </div>
+        <div className="exam-entry-arrow" style={{ color: "var(--gold-300)" }}>→</div>
+      </button>
+
+      <button className="exam-entry-card" style={{ borderColor: "var(--ruby)", background: "linear-gradient(135deg, #c25a5122, var(--wood-800))" }} onClick={() => setSub("context")}>
+        <div className="exam-entry-icon">📖</div>
+        <div style={{ flex: 1, textAlign: "left" }}>
+          <div className="exam-entry-title" style={{ color: "var(--ruby-soft)" }}>Context Clues <span className="plan-badge pro" style={{ marginLeft: 4, fontSize: 9 }}>Premium</span></div>
+          <div className="exam-entry-sub">Spot the misspelt word inside a real passage — the closest thing to how spelling shows up on exam day.</div>
+        </div>
+        <div className="exam-entry-arrow" style={{ color: "var(--ruby-soft)" }}>→</div>
+      </button>
+
       <div className="bookshelf">
         {CHAPTERS.map((ch) => {
           const locked = ch.id > child.unlockedTo;

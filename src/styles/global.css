@@ -196,6 +196,17 @@ label.field-label { display: flex; flex-direction: column; gap: 6px; font-size: 
 .tome-cta { font-size: 12px; font-weight: 700; margin-top: 4px; }
 .tome-cleared { position: absolute; top: 10px; right: 10px; font-size: 9px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.06em; background: #4fa07a22; color: var(--emerald-soft); border: 1px solid #4fa07a55; border-radius: 20px; padding: 2px 7px; }
 
+.exam-entry-card {
+  display: flex; align-items: center; gap: 14px; width: 100%; margin: 4px 0 18px; padding: 16px 18px;
+  border: 1.5px solid var(--sapphire); border-radius: 14px; background: linear-gradient(135deg, #6b9bd122, var(--wood-800));
+  text-align: left; color: var(--text);
+}
+.exam-entry-card:hover { border-color: var(--sapphire-soft); }
+.exam-entry-icon { font-size: 28px; }
+.exam-entry-title { font-family: var(--font-display); font-size: 16.5px; font-weight: 600; color: var(--sapphire-soft); }
+.exam-entry-sub { font-size: 12.5px; color: var(--text-dim); margin-top: 3px; }
+.exam-entry-arrow { font-size: 20px; color: var(--sapphire-soft); }
+
 .roadmap-card { margin: 4px 14px 0; padding: 16px 18px; border: 1.5px dashed var(--hairline); border-radius: 14px; text-align: center; background: #1c140d88; }
 .roadmap-title { font-size: 14.5px; font-weight: 700; margin-bottom: 8px; font-family: var(--font-display); }
 .roadmap-list { display: flex; flex-direction: column; gap: 4px; font-size: 12.5px; color: var(--text-dim); }
@@ -333,6 +344,43 @@ textarea.field { min-height: 84px; resize: vertical; }
 .plan-badge { display: inline-block; font-size: 10px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.05em; padding: 3px 9px; border-radius: 20px; }
 .plan-badge.free { background: #8d7a5c22; color: var(--text-dim); }
 .plan-badge.pro { background: #d4af6122; color: var(--gold-300); }
+
+/* ---------- context clues ---------- */
+.context-passage { font-size: 17px; line-height: 1.7; color: var(--ink); }
+.context-highlight { color: var(--ruby); font-weight: 800; text-decoration: underline; text-decoration-color: #c25a5188; text-underline-offset: 3px; }
+.token-progress { display: flex; align-items: center; justify-content: center; gap: 8px; margin-bottom: 12px; }
+.token-dot { width: 14px; height: 14px; border-radius: 50%; background: var(--wood-950); border: 1.5px solid var(--hairline); }
+.token-dot.earned { background: var(--gold-400); border-color: var(--gold-300); }
+.transfer-bar-track { height: 10px; background: var(--wood-950); border-radius: 5px; overflow: hidden; margin-top: 6px; }
+.transfer-bar-fill { height: 100%; border-radius: 5px; background: linear-gradient(90deg, var(--sapphire), var(--emerald)); }
+
+/* ---------- mystery challenge ---------- */
+.mystery-tray { display: flex; justify-content: center; gap: 8px; flex-wrap: wrap; margin: 10px 0 6px; }
+.mystery-slot {
+  width: 42px; height: 48px; border-radius: 8px; display: flex; align-items: center; justify-content: center;
+  font-size: 20px; font-weight: 800; font-family: var(--font-mono); text-transform: uppercase;
+  background: var(--wood-950); border: 1.5px solid var(--hairline); color: var(--text-faint);
+}
+.mystery-slot.filled { background: linear-gradient(160deg, var(--gold-300), var(--gold-600)); color: var(--ink); border-color: var(--gold-300); }
+.mystery-slot.glow { animation: mysteryGlow 0.7s ease; }
+@keyframes mysteryGlow {
+  0% { box-shadow: 0 0 0 0 #d4af6100; transform: scale(1); }
+  40% { box-shadow: 0 0 18px 6px #d4af61aa; transform: scale(1.12); }
+  100% { box-shadow: 0 0 0 0 #d4af6100; transform: scale(1); }
+}
+.mystery-progress { text-align: center; font-size: 13px; color: var(--gold-300); font-weight: 700; margin-bottom: 4px; }
+.choice-row.eliminated { opacity: 0.35; text-decoration: line-through; pointer-events: none; }
+
+.anagram-tray { display: flex; justify-content: center; gap: 8px; flex-wrap: wrap; margin: 10px 0 16px; min-height: 52px; }
+.anagram-slot { width: 44px; height: 50px; border-bottom: 3px solid #00000030; display: flex; align-items: center; justify-content: center; font-size: 21px; font-weight: 800; text-transform: uppercase; }
+.anagram-bank { display: flex; justify-content: center; gap: 8px; flex-wrap: wrap; }
+.anagram-tile {
+  width: 46px; height: 50px; min-width: 44px; min-height: 44px; border-radius: 8px; border: 1px solid #00000022;
+  background: var(--gold-100); color: var(--ink); font-weight: 800; font-size: 20px; text-transform: uppercase; box-shadow: 0 3px 0 #00000018;
+}
+.anagram-tile:active { transform: translateY(2px); box-shadow: none; }
+.anagram-tile:disabled { opacity: 0.25; }
+.anagram-hint-fill { background: linear-gradient(160deg, var(--sapphire), var(--sapphire-soft)) !important; color: #0b1b2b !important; }
 
 /* ---------- animations ---------- */
 .anim-rise { animation: rise .45s cubic-bezier(.2,.8,.2,1); }

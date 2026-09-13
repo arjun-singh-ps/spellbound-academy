@@ -7,11 +7,14 @@ import Topbar from "./components/Topbar.jsx";
 import ChapterMap from "./components/ChapterMap.jsx";
 import ChapterRunner from "./components/ChapterRunner.jsx";
 import ParentDashboard from "./components/ParentDashboard.jsx";
+import MockExamFlow from "./components/exam/MockExamFlow.jsx";
+import MysteryChallengeFlow from "./components/mystery/MysteryChallengeFlow.jsx";
+import ContextCluesFlow from "./components/context/ContextCluesFlow.jsx";
 
 export default function App() {
   const {
     authChecked, user, family, isFirebaseConfigured,
-    mode, setMode, sub, setSub, pinPrompt,
+    mode, setMode, sub, setSub, pinPrompt, setPinPrompt,
     activeChapter, setActiveChapter,
   } = useApp();
 
@@ -37,6 +40,11 @@ export default function App() {
       {mode === "student" && sub === "map" && <ChapterMap />}
       {mode === "student" && sub === "chapter" && activeChapter && (
         <ChapterRunner chapter={activeChapter} onExit={() => setSub("map")} onGoTo={(ch) => setActiveChapter(ch)} />
+      )}
+      {mode === "student" && sub === "exam" && <MockExamFlow onExit={() => setSub("map")} />}
+      {mode === "student" && sub === "mystery" && <MysteryChallengeFlow onExit={() => setSub("map")} />}
+      {mode === "student" && sub === "context" && (
+        <ContextCluesFlow onExit={() => setSub("map")} onUpgrade={() => setPinPrompt(true)} />
       )}
       {mode === "parent" && <ParentDashboard />}
     </div>

@@ -1,0 +1,177 @@
+/* ============================================================
+   MOCK EXAM HALL — deliberately NOT the Academy's parchment/gold
+   theme. A mock exam should look and feel like the real testing
+   software an 11+ candidate sits in front of on the day: clinical,
+   light, blue-and-white, unambiguous. Realism is the point here.
+   ============================================================ */
+.xh-root {
+  --xh-bg: #eef2f6;
+  --xh-header: #1c6ea4;
+  --xh-header-text: #ffffff;
+  --xh-card-bg: #ffffff;
+  --xh-border: #1c6ea4;
+  --xh-hairline: #d7e0e8;
+  --xh-text: #1f2937;
+  --xh-text-dim: #5b6b7a;
+  --xh-accent: #2f7fb8;
+  --xh-accent-dark: #175a84;
+  --xh-timer: #c0392b;
+  --xh-flag: #d64545;
+  --xh-good: #1f8a55;
+  --xh-bad: #c0392b;
+  --xh-table-header: #16283a;
+
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  background: var(--xh-bg);
+  color: var(--xh-text);
+  font-family: 'Inter', system-ui, sans-serif;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.xh-statusbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 22px;
+  background: var(--xh-header);
+  color: var(--xh-header-text);
+  padding: 12px 20px;
+  font-weight: 700;
+  font-size: 14px;
+}
+.xh-statusbar b.warn { color: #ffce56; }
+.xh-statusbar b.bad { color: #ff9a8f; }
+.xh-statusbar b.flag { color: #d9b8ff; }
+.xh-statusbar .xh-spacer { flex: 1; }
+
+.xh-body {
+  flex: 1;
+  display: flex;
+  gap: 16px;
+  padding: 18px;
+  max-width: 1100px;
+  width: 100%;
+  margin: 0 auto;
+  align-items: flex-start;
+  flex-wrap: wrap;
+}
+.xh-main { flex: 1; min-width: 280px; }
+.xh-card {
+  background: var(--xh-card-bg);
+  border: 2px solid var(--xh-border);
+  border-radius: 14px;
+  padding: 24px 26px;
+}
+.xh-qnum { color: var(--xh-accent); font-size: 19px; font-weight: 800; margin: 0 0 12px; }
+.xh-prompt { font-size: 16px; line-height: 1.5; margin-bottom: 14px; }
+.xh-divider { border: none; border-top: 1px solid var(--xh-hairline); margin: 14px 0; }
+.xh-answer-label { color: var(--xh-accent); font-size: 15px; font-weight: 800; margin: 0 0 12px; }
+
+.xh-options { display: grid; grid-template-columns: 1fr 1fr; gap: 12px 20px; }
+@media (max-width: 560px) { .xh-options { grid-template-columns: 1fr; } }
+.xh-option {
+  display: flex; align-items: center; gap: 10px;
+  border: 1.5px solid var(--xh-accent); border-radius: 8px;
+  padding: 8px 10px; background: #fff; cursor: pointer; text-align: left;
+}
+.xh-option:hover { background: #f3f9fd; }
+.xh-option.selected { background: #dcedf9; border-color: var(--xh-accent-dark); box-shadow: inset 0 0 0 1px var(--xh-accent-dark); }
+.xh-letter {
+  width: 30px; height: 30px; flex-shrink: 0; border-radius: 6px;
+  background: var(--xh-accent); color: #fff; font-weight: 800; font-size: 14px;
+  display: flex; align-items: center; justify-content: center;
+}
+.xh-option.selected .xh-letter { background: var(--xh-accent-dark); }
+.xh-option-text { font-size: 15px; color: var(--xh-text); flex: 1; }
+
+.xh-sentence { font-size: 18px; line-height: 2.2; margin-bottom: 16px; }
+.xh-segment {
+  display: inline; border-bottom: 2px dashed var(--xh-accent); padding: 2px 3px; cursor: pointer; border-radius: 3px;
+}
+.xh-segment:hover { background: #eaf4fb; }
+.xh-segment.selected { background: #dcedf9; border-bottom-color: var(--xh-accent-dark); font-weight: 700; }
+.xh-segtag {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 20px; height: 20px; border-radius: 5px; background: var(--xh-accent); color: #fff;
+  font-size: 11px; font-weight: 800; margin-right: 5px; vertical-align: middle;
+}
+.xh-segment.selected .xh-segtag { background: var(--xh-accent-dark); }
+.xh-nomistake {
+  display: flex; align-items: center; gap: 10px; border: 1.5px solid var(--xh-accent);
+  border-radius: 8px; padding: 10px 12px; background: #fff; cursor: pointer; margin-top: 6px;
+}
+.xh-nomistake:hover { background: #f3f9fd; }
+.xh-nomistake.selected { background: #dcedf9; border-color: var(--xh-accent-dark); }
+
+.xh-side {
+  width: 220px; flex-shrink: 0; background: var(--xh-card-bg); border: 1px solid var(--xh-hairline);
+  border-radius: 10px; overflow: hidden; max-height: 70vh; display: flex; flex-direction: column;
+}
+.xh-side-head {
+  display: grid; grid-template-columns: 46px 1fr; background: var(--xh-table-header); color: #fff;
+  font-size: 12px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.04em; padding: 8px 10px;
+}
+.xh-side-list { overflow-y: auto; }
+.xh-side-row {
+  display: grid; grid-template-columns: 46px 1fr; align-items: center; padding: 7px 10px;
+  font-size: 13.5px; border-bottom: 1px solid var(--xh-hairline); cursor: pointer; font-family: 'Space Mono', monospace;
+}
+.xh-side-row:hover { background: #f3f9fd; }
+.xh-side-row.active { background: #dcedf9; font-weight: 800; }
+.xh-side-row .xh-qn { display: flex; align-items: center; gap: 4px; font-family: 'Inter', sans-serif; font-weight: 700; }
+.xh-side-row .xh-time { color: var(--xh-timer); }
+.xh-side-row.answered .xh-qn::after { content: ""; }
+.xh-dot { width: 7px; height: 7px; border-radius: 50%; display: inline-block; }
+
+.xh-bottombar {
+  position: sticky; bottom: 0; display: flex; align-items: center; gap: 14px;
+  background: var(--xh-card-bg); border-top: 1px solid var(--xh-hairline); padding: 12px 20px;
+}
+.xh-iconbtn {
+  display: flex; flex-direction: column; align-items: center; gap: 3px; background: var(--xh-accent);
+  color: #fff; border: none; border-radius: 10px; width: 54px; height: 46px; font-size: 17px; cursor: pointer;
+}
+.xh-iconbtn span.lbl { font-size: 9.5px; font-weight: 700; text-transform: uppercase; }
+.xh-iconbtn:hover { background: var(--xh-accent-dark); }
+.xh-iconbtn.flagged { background: var(--xh-flag); }
+.xh-bottom-center { flex: 1; text-align: center; color: var(--xh-accent); font-weight: 800; font-size: 14px; }
+.xh-timer-box {
+  background: var(--xh-bg); border: 2px solid var(--xh-hairline); border-radius: 10px; padding: 8px 16px;
+  font-family: 'Space Mono', monospace; font-size: 20px; font-weight: 800; color: var(--xh-timer);
+}
+
+.xh-overlay {
+  position: fixed; inset: 0; background: #0b1220aa; z-index: 110; display: flex; align-items: center; justify-content: center; padding: 20px;
+}
+.xh-modal {
+  background: #fff; border-radius: 14px; padding: 26px 24px; max-width: 420px; width: 100%; color: var(--xh-text);
+}
+.xh-modal h3 { color: var(--xh-accent); margin: 0 0 10px; }
+.xh-modal p { font-size: 14px; line-height: 1.6; color: var(--xh-text-dim); }
+.xh-modal-actions { display: flex; gap: 10px; margin-top: 18px; }
+.xh-btn { border: none; border-radius: 9px; padding: 11px 18px; font-weight: 700; font-size: 14px; cursor: pointer; }
+.xh-btn-primary { background: var(--xh-accent); color: #fff; }
+.xh-btn-primary:hover { background: var(--xh-accent-dark); }
+.xh-btn-ghost { background: transparent; border: 1.5px solid var(--xh-hairline); color: var(--xh-text-dim); }
+
+/* ---------- exam picker & review (rendered inside the normal app shell) ---------- */
+.exam-picker-card {
+  background: var(--wood-800); border: 1px solid var(--hairline); border-radius: 16px; padding: 22px; margin-bottom: 14px;
+}
+.exam-picker-title { font-family: var(--font-display); font-size: 19px; margin: 0 0 6px; }
+.exam-picker-meta { display: flex; gap: 14px; font-size: 12.5px; color: var(--text-dim); margin: 8px 0 14px; flex-wrap: wrap; }
+
+.xh-review-summary { text-align: center; padding: 10px 0 6px; }
+.xh-review-pct { font-size: 44px; font-weight: 800; color: var(--xh-accent); font-family: 'Space Mono', monospace; }
+.xh-review-row {
+  display: flex; align-items: center; gap: 12px; padding: 12px 14px; border-radius: 10px; border: 1px solid var(--xh-hairline); margin-bottom: 8px; background: #fff;
+}
+.xh-review-row.correct { border-left: 5px solid var(--xh-good); }
+.xh-review-row.incorrect { border-left: 5px solid var(--xh-bad); }
+.xh-review-mark { font-size: 20px; font-weight: 800; width: 24px; text-align: center; }
+.xh-review-body { flex: 1; font-size: 13.5px; }
+.xh-review-body b { color: var(--xh-text); }

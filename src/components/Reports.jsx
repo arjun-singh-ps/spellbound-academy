@@ -1,6 +1,7 @@
 import React from "react";
 import { CHAPTERS } from "../data/chapters.js";
 import { buildPool } from "../lib/pool.js";
+import { CONTEXT_CATEGORY_LABEL } from "../data/contextPassages.js";
 
 function weekKey(d = new Date()) {
   const dt = new Date(d); const day = (dt.getDay() + 6) % 7;
@@ -29,6 +30,12 @@ export default function Reports({ family, child, childName }) {
   const dExam = daysUntil(family.examDate || "2027-09-30");
   const remaining = Math.max(0, pool.length - mastered);
   const perDay = dExam > 0 ? (remaining / dExam).toFixed(1) : remaining;
+
+  const ctx = child.contextStats || { byCategory: {}, right: 0, wrong: 0 };
+  const ctxTotal = ctx.right + ctx.wrong;
+  const ctxAccuracy = ctxTotal ? Math.round((ctx.right / ctxTotal) * 100) : null;
+  const elsewhere = history.filter((h) => h.chapter !== "context");
+  const elsewhereAccuracy = elsewhere.length ? Math.round((elsewhere.filter((h) => h.correct).length / elsewhere.length) * 100) : null;
 
   return (
     <>
@@ -74,7 +81,44 @@ export default function Reports({ family, child, childName }) {
         </div>
       </div>
 
-      <div className="panel" style={{ marginTop: 20 }}>
+      {ctxTotal > 0 && (
+        <div className="panel" style={{ marginTop: 16 }}>
+          <h3 style={{ fontSize: 15, margin: "0 0 4px" }}>Context Transfer <span className="plan-badge pro" style={{ marginLeft: 4 }}>Premium</span></h3>
+          <p className="muted" style={{ marginTop: 0 }}>Context Clues accuracy compared with everywhere else — a big gap either way is worth a look, not a single number to chase.</p>
+          <div className="row-between" style={{ marginTop: 10 }}>
+            <span style={{ fontSize: 13.5 }}>Context Clues (in a passage)</span>
+            <span className="font-mono" style={{ color: "var(--ruby-soft)", fontWeight: 700 }}>{ctxAccuracy}% <span className="faint">({ctxTotal} attempt{ctxTotal === 1 ? "" : "s"})</span></span>
+          </div>
+          <div className="transfer-bar-track"><div className="transfer-bar-fill" style={{ width: `${ctxAccuracy}%` }} /></div>
+          {elsewhereAccuracy !== null && (
+            <>
+              <div className="row-between" style={{ marginTop: 10 }}>
+                <span style={{ fontSize: 13.5 }}>Everywhere else (Grimoire, exams, mysteries)</span>
+                <span className="font-mono" style={{ color: "var(--sapphire-soft)", fontWeight: 700 }}>{elsewhereAccuracy}% <span className="faint">({elsewhere.length} attempts)</span></span>
+              </div>
+              <div className="transfer-bar-track"><div className="transfer-bar-fill" style={{ width: `${elsewhereAccuracy}%`, background: "var(--sapphire)" }} /></div>
+            </>
+          )}
+          {Object.keys(ctx.byCategory).length > 0 && (
+            <>
+              <p className="muted" style={{ marginBottom: 6 }}>By error type, in Context Clues only:</p>
+              {Object.entries(ctx.byCategory).map(([cat, v]) => {
+                const t = v.right + v.wrong;
+                const pct = t ? Math.round((v.right / t) * 100) : 0;
+                return (
+                  <div key={cat} className="row-between" style={{ fontSize: 13, margin: "4px 0" }}>
+                    <span className="muted">{CONTEXT_CATEGORY_LABEL[cat] || cat}</span>
+                    <span className="font-mono">{pct}% ({t})</span>
+                  </div>
+                );
+              })}
+            </>
+          )}
+          {ctxTotal < 10 && <p className="faint" style={{ marginTop: 10 }}>Still an early signal — more attempts will make this more reliable.</p>}
+        </div>
+      )}
+
+      <div className="panel" style={{ marginTop: 16 }}>
         <p className="muted" style={{ margin: 0 }}><strong style={{ color: "var(--text)" }}>Weekly email report (Pro):</strong> a Sunday summary — accuracy trend, chapters cleared, strongest + weakest words, paced against the exam countdown, sent to the parent email.</p>
       </div>
     </>
